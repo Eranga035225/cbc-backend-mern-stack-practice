@@ -83,6 +83,8 @@ export function loginUser(req,res){
       }
     )
     }
+
+    //function for to check wthere is a an admin
   
 export function isAdmin(req){
   if(req.user == null){

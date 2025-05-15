@@ -75,3 +75,81 @@ export async function deleteProduct(req,res){
 
 
 }
+
+
+export async function updateProduct(req,res){
+
+  if(!isAdmin(req)){ //if he is not an admin
+    res.status(403).json({
+      message : "You are not authorized to update products"
+    })
+    return //to stop here from executing
+  }
+
+  const productId = req.params.productId;
+  const updatingData = req.body;
+
+  try{
+    await Product.updateOne(
+      {productId : productId},
+      updatingData
+    )
+    
+    res.json({
+      message : "Product updated successfully"
+    })
+
+  }catch(err){
+    res.status(500).json({
+      message : "Failed to update the product",
+      error : err
+    })
+
+  }
+
+
+}
+
+
+export async function getProductById(req,res){
+
+  const productId = req.params.productId;
+   
+  try{
+    const product = await Product.findOne({
+      productId : productId
+    })
+    if(product == null){
+      res.status(404).json({
+        message : "Product not found"
+      })
+      return
+    }
+    if(product.isAvailable){
+      res.json(product);
+    }else{
+      if(!isAdmin(req)){
+        res.status(404).json({
+          message : "Product not found"
+        })
+      }else{
+         res.json(product);
+
+      }
+
+     
+
+
+   
+    }
+
+
+
+
+  }catch(err){
+
+  }
+
+
+
+}

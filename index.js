@@ -5,10 +5,13 @@ import productRouter from './routes/productRouter.js';
 import userRouter from './routes/userRouter.js';
 import jwt from 'jsonwebtoken';
 import orderRouter from './routes/orderRouter.js';
+import cors from 'cors';
 
 let app = express(); 
 
+app.use(cors());
 app.use(bodyParser.json());
+
 app.use (
   (req,res,next)=>{
 
@@ -46,10 +49,10 @@ app.use("/users", userRouter);
 app.use("/orders", orderRouter);
 
 
-app.listen(5000, 
+app.listen(5050, 
   () => 
     {
-      console.log('Server is running on port 5000');
+      console.log('Server is running on port 5050');
       
     }
   )

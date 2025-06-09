@@ -67,9 +67,7 @@ export async function  createOrder(req,res){
       }
       total += item.price * orderInfo.products[i].quantity;
       labeledTotal += item.labeledPrice * orderInfo.products[i].quantity; 
-
-
-
+      
     }
 
   //create order object

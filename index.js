@@ -9,7 +9,7 @@ import cors from 'cors';
 
 let app = express(); 
 
-app.use(cors());
+app.use(cors()); // all are allowed
 app.use(bodyParser.json());
 
 app.use (
@@ -44,9 +44,9 @@ mongoose.connect("mongodb+srv://mern_user:0352257111@cluster0.a2so6hk.mongodb.ne
 
 
 
-app.use("/products", productRouter);
-app.use("/users", userRouter);
-app.use("/orders", orderRouter);
+app.use("/api/products", productRouter);
+app.use("/api/users", userRouter);
+app.use("/api/orders", orderRouter);
 
 
 app.listen(5055, 

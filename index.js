@@ -36,8 +36,8 @@ app.use (
     }
 
   });
-//mongodb+srv://admin:0352257111@cluster1.kbaqeda.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1
-mongoose.connect("mongodb+srv://admin:0352257111@cluster1.kbaqeda.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1")
+
+mongoose.connect("mongodb+srv://mern_user:0352257111@cluster0.a2so6hk.mongodb.net/?appName=Cluster0")
 .then(()=>{
   console.log("Connected to database");
 })
@@ -49,10 +49,10 @@ app.use("/users", userRouter);
 app.use("/orders", orderRouter);
 
 
-app.listen(5050, 
+app.listen(5055, 
   () => 
     {
-      console.log('Server is running on port 5050');
+      console.log('Server is running on port 5055');
       
     }
   )

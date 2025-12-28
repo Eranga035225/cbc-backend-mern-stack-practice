@@ -112,7 +112,7 @@ export async function getOrders(req,res){
   }
 
   try{
-    if(req.user.role == admin){
+    if(req.user.role == 'admin'){
       const orders = await Order.find();
       res.json(orders);
     }else{

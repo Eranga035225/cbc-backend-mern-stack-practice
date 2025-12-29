@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import axios from "axios";
 import nodemailer from "nodemailer";
+import OTP from "../models/otp.js";
 
 
 dotenv.config();
@@ -208,14 +209,26 @@ export async function sendOTP(req, res) {
     });
   }
 
-  const otp = Math.floor(100000 + Math.random() * 900000);
 
+  await OTP.deleteMany({
+    email: email
+  })
+
+  
+
+
+  const randomOtp = Math.floor(100000 + Math.random() * 900000);
   const message = {
     from: `"Beauty Cosmetics" <${process.env.EMAIL}>`,
     to: email,
     subject: "OTP Verification for Beauty Cosmetics",
-    text: `This is your OTP: ${otp}`,
+    text: `This is your OTP: ${randomOtp}`,
   };
+
+  const otp = new OTP({
+    email: email,
+    otp: randomOtp
+  })
 
   transport.sendMail(message, (error, info) => {
     if (error) {
@@ -228,7 +241,7 @@ export async function sendOTP(req, res) {
 
     res.json({
       message: "OTP sent successfully",
-      otp, // ⚠️ REMOVE THIS IN PRODUCTION
+      rnadomOtp, // ⚠️ REMOVE THIS IN PRODUCTION
     });
   });
 }

@@ -254,6 +254,17 @@ export async function resetPassword(req,res){
   const email = req.body.email;
   const newPassword = req.body.newPassword;
 
+  const res = await OTP.findOne({
+    email: email
+  })
+  if(res== null){
+    return res.status(404).json({
+      message: "User not found",
+    });
+
+
+  }
+
 
 
 

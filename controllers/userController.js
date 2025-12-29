@@ -269,8 +269,11 @@ export async function resetPassword(req,res){
   if(otp == res.otp){
 
   }else{
+    res.status(401).json({
+      message : "Invalid OTP"
+    })
 
-    
+
   }
 
 

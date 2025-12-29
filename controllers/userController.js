@@ -202,29 +202,21 @@ export default function sendOTP(req, res) {
     return
 
   }
-  transport.sendMail( "This is your OTP: " + randomOTP, {
-    from : process.env.EMAIL,
-    to : email
-  }).then(()=>{
-    res.json({
-      message : "OTP sent successfully",
-      otp : randomOTP
-    })
-  }).catch((err)=>{
-    console.log(err);
-    res.status(500).json({
-      message : "Failed to send OTP",
-      error : err
-    })
-  })
-  
 
 
-
-
-
-
-
-
+  transport.sendMail( "This is your OTP: " + randomOTP, (error, infor)=> {
+    if(error){
+      res.status(500).json({
+        message : "Failed to send OTP",
+        error : error
+      })
+    }else{
+      res.json({
+        message : "OTP sent successfully",
+        otp : randomOTP
+      })
+    }
+    }
+  )
 
 }

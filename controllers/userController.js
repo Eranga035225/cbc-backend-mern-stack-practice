@@ -139,7 +139,21 @@ export async function loginWithGoogle(req, res) {
         lastName: googleRes.data.family_name,
         password: "googleUser",
         img: googleRes.data.picture
-      });
+      })
+
+      await newUser.save();
+
+      const token = jwt.sign({
+        email : newUser.email,
+        firstName : newUser.firstName,
+        lastName : newUser.lastName,
+        role : newUser.role,
+        img : newUser.img
+      },
+      process.env.JWT_KEY,
+    )
+
+
     }
 
    

@@ -127,15 +127,11 @@ export async function loginWithGoogle(req, res) {
       }
     );
 
-    const googleUser = googleRes.data;
+    const user = await User.findOne({
+      email: googleRes.data.email,
+    })
 
-    console.log(googleUser);
-
-    // ✅ SEND RESPONSE BACK
-    return res.status(200).json({
-      message: "Google login success",
-      user: googleUser,
-    });
+   
 
   } catch (error) {
     console.error("Google login error:", error.response?.data || error.message);

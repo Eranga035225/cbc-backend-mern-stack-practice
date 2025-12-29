@@ -1,6 +1,7 @@
 import Order from "../models/order.js";
 import Product from "../models/product.js";
 
+
 export async function  createOrder(req,res){
   //get user info
   if(req.user == null){
@@ -134,6 +135,45 @@ export async function getOrders(req,res){
 
   }
   
+
+  export async function updateOrderStatus(req,res){
+    if(!isAdmin(req)){
+      res.status(403).json({
+        message : "You are not authorized to update orders"
+      })
+      return
+    }
+   
+    try{
+       const orderId = req.params.orderId;
+       const status = req.params.status;
+
+       await Order.updateOne(
+        {
+          orderId : orderId
+        },
+        {
+          status : status
+
+        }
+       )
+
+
+
+
+    }catch(e){
+      res.status(500).json({
+        message : "Failed to update the order status",
+        error : e
+      })
+      return;
+
+
+
+    }
+
+    
+  }
 
 
 

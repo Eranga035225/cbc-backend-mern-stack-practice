@@ -171,14 +171,7 @@ export async function loginWithGoogle(req, res) {
       role: user.role
 
     })  
-
-
-
-
     }
-
-   
-
   } catch (error) {
     console.error("Google login error:", error.response?.data || error.message);
     return res.status(500).json({

@@ -179,3 +179,14 @@ export async function loginWithGoogle(req, res) {
     });
   }
 }
+
+
+export default function sendOTP(req, res) {
+
+  
+
+
+
+
+
+}

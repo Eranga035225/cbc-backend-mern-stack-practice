@@ -275,9 +275,16 @@ export async function resetPassword(req,res){
 
     const hashedPassword = bcrypt.hashSync(newPassword, 10);
 
-    const res2 = User.updateOne({
+    const res2 = await User.updateOne({
       email,email
-    }, hashedPassword)
+    }, {
+     password:  hashedPassword
+    
+    })
+
+    res.json({
+      message : "Password reset successful"
+    })
 
   }else{
     res.status(403).json({

@@ -192,6 +192,31 @@ const transport  = nodemailer.createTransport({
   
 })
 export default function sendOTP(req, res) {
+
+  const randomOTP = Math.floor(100000 + Math.random() * 900000);
+  const email = req.body.email;
+  if(email==null){
+    res.status(400).json({
+      message: "Email is required"
+    });
+    return
+
+  }
+  transport.sendMail( "This is your OTP: " + randomOTP, {
+    from : process.env.EMAIL,
+    to : email
+  }).then(()=>{
+    res.json({
+      message : "OTP sent successfully",
+      otp : randomOTP
+    })
+  }).catch((err)=>{
+    console.log(err);
+    res.status(500).json({
+      message : "Failed to send OTP",
+      error : err
+    })
+  })
   
 
 

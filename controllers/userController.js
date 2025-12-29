@@ -7,6 +7,7 @@ import nodemailer from "nodemailer";
 import OTP from "../models/otp.js";
 
 
+
 dotenv.config();
 
 export function createUser(req,res){
@@ -267,9 +268,12 @@ export async function resetPassword(req,res){
 
 
   if(otp == res.otp){
+    await OTP.deleteMany({
+      email: email
+    })
 
   }else{
-    res.status(401).json({
+    res.status(403).json({
       message : "Invalid OTP"
     })
 

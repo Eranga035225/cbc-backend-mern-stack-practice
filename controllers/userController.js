@@ -131,6 +131,17 @@ export async function loginWithGoogle(req, res) {
       email: googleRes.data.email,
     })
 
+    if(user==null){
+
+      const newUser = new User({
+        email: googleRes.data.email,
+        firstName: googleRes.data.given_name,
+        lastName: googleRes.data.family_name,
+        password: "googleUser",
+        img: googleRes.data.picture
+      });
+    }
+
    
 
   } catch (error) {

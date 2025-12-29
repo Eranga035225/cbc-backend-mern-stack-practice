@@ -2,6 +2,8 @@ import User from "../models/user.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import axios from "axios";
+
 dotenv.config();
 
 export function createUser(req,res){
@@ -104,9 +106,27 @@ export function isAdmin(req){
 }
 
 
-export async function loginWithGoogle(res,res){
+export async function loginWithGoogle(req,res){
+  const token = req.body.accesstToken;
+
+  if(token== null){
+    res.status(403).json({
+      message : "Please log in with Google"
+    })
+    return
+  }
+  await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",{
+    headers : {
+      Authorization : `Bearer ${token}`
+    }
+  })
+  console.log(res.data);
+  
+ 
 
 
+  
+  
 
 
 }

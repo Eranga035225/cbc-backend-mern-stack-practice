@@ -272,6 +272,8 @@ export async function resetPassword(req,res){
       email: email
     })
 
+    const hashedPassword = bcrypt.hashSync(newPassword, 10);
+
   }else{
     res.status(403).json({
       message : "Invalid OTP"

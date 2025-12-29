@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import axios from "axios";
 
+
 dotenv.config();
 
 export function createUser(req,res){
@@ -106,27 +107,40 @@ export function isAdmin(req){
 }
 
 
-export async function loginWithGoogle(req,res){
-  const token = req.body.accesstToken;
+export async function loginWithGoogle(req, res) {
+  try {
+    const token = req.body.accessToken;
 
-  if(token== null){
-    res.status(403).json({
-      message : "Please log in with Google"
-    })
-    return
-  }
-  await axios.get("https://www.googleapis.com/oauth2/v3/userinfo",{
-    headers : {
-      Authorization : `Bearer ${token}`
+    if (!token) {
+      return res.status(403).json({
+        message: "Please log in with Google",
+      });
     }
-  })
-  console.log(res.data);
-  
- 
 
+    // ✅ CALL GOOGLE API
+    const googleRes = await axios.get(
+      "https://www.googleapis.com/oauth2/v3/userinfo",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-  
-  
+    const googleUser = googleRes.data;
 
+    console.log(googleUser);
 
+    // ✅ SEND RESPONSE BACK
+    return res.status(200).json({
+      message: "Google login success",
+      user: googleUser,
+    });
+
+  } catch (error) {
+    console.error("Google login error:", error.response?.data || error.message);
+    return res.status(500).json({
+      message: "Google authentication failed",
+    });
+  }
 }

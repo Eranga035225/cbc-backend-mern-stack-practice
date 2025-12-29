@@ -157,9 +157,9 @@ export async function getOrders(req,res){
 
         }
        )
-
-
-
+       res.json({
+         message : "Order status updated successfully"
+       })
 
     }catch(e){
       res.status(500).json({

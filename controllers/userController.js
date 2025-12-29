@@ -243,7 +243,7 @@ export async function sendOTP(req, res) {
 
     res.json({
       message: "OTP sent successfully",
-      rnadomOtp, // ⚠️ REMOVE THIS IN PRODUCTION
+      randomOtp, // ⚠️ REMOVE THIS IN PRODUCTION
     });
   });
 }

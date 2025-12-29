@@ -190,7 +190,7 @@ const transport = nodemailer.createTransport({
 });
 
   
-export function sendOTP(req, res) {
+export async function sendOTP(req, res) {
   const { email } = req.body;
 
   if (!email) {
@@ -198,6 +198,16 @@ export function sendOTP(req, res) {
       message: "Email is required",
     });
   }
+  const user = await User.findOne({
+    email: email
+  })
+
+  if(user==null){
+    return res.status(404).json({
+      message: "User not found",
+    });
+  }
+
 
   const otp = Math.floor(100000 + Math.random() * 900000);
 

@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import axios from "axios";
-
+import nodemailer from "nodemailer";
 
 dotenv.config();
 
@@ -180,10 +180,23 @@ export async function loginWithGoogle(req, res) {
   }
 }
 
-
-export default function sendOTP(req, res) {
-
+const transport  = nodemailer.createTransport({
+  service : "gmail",
+  host : "smtp.gmail.com",
+  port : 587,
+  secure: false,
+  auth : {
+    user : process.env.EMAIL,
+    pass : process.env.PASSWORD
+  }
   
+})
+export default function sendOTP(req, res) {
+  
+
+
+
+
 
 
 

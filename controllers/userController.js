@@ -230,6 +230,8 @@ export async function sendOTP(req, res) {
     otp: randomOtp
   })
 
+  await otp.save()
+
   transport.sendMail(message, (error, info) => {
     if (error) {
       console.error("OTP email error:", error);

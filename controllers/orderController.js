@@ -153,7 +153,7 @@ export async function getOrders(req,res){
           orderId : orderId
         },
         {
-          status : status
+          status : status  //details thta should be updated
 
         }
        )

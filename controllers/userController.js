@@ -102,3 +102,11 @@ export function isAdmin(req){
 
   return true;
 }
+
+
+export async function loginWithGoogle(res,res){
+
+
+
+
+}

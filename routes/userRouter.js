@@ -3,6 +3,10 @@ import { createUser, loginUser } from "../controllers/userController.js";
 import { loginWithGoogle } from "../controllers/userController.js";
 import { sendOTP } from "../controllers/userController.js";
 
+
+
+
+
 const userRouter = express.Router();
 
 userRouter.post("/", createUser);

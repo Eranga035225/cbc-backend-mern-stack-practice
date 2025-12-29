@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import axios from "axios";
 import nodemailer from "nodemailer";
 
+
 dotenv.config();
 
 export function createUser(req,res){
@@ -180,43 +181,45 @@ export async function loginWithGoogle(req, res) {
   }
 }
 
-const transport  = nodemailer.createTransport({
-  service : "gmail",
-  host : "smtp.gmail.com",
-  port : 587,
-  secure: false,
-  auth : {
-    user : process.env.EMAIL,
-    pass : process.env.PASSWORD
-  }
+const transport = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.PASSWORD, // Gmail APP PASSWORD
+  },
+});
+
   
-})
-export default function sendOTP(req, res) {
+export function sendOTP(req, res) {
+  const { email } = req.body;
 
-  const randomOTP = Math.floor(100000 + Math.random() * 900000);
-  const email = req.body.email;
-  if(email==null){
-    res.status(400).json({
-      message: "Email is required"
+  if (!email) {
+    return res.status(400).json({
+      message: "Email is required",
     });
-    return
-
   }
 
+  const otp = Math.floor(100000 + Math.random() * 900000);
 
-  transport.sendMail( "This is your OTP: " + randomOTP, (error, infor)=> {
-    if(error){
-      res.status(500).json({
-        message : "Failed to send OTP",
-        error : error
-      })
-    }else{
-      res.json({
-        message : "OTP sent successfully",
-        otp : randomOTP
-      })
-    }
-    }
-  )
+  const message = {
+    from: `"Beauty Cosmetics" <${process.env.EMAIL}>`,
+    to: email,
+    subject: "OTP Verification for Beauty Cosmetics",
+    text: `This is your OTP: ${otp}`,
+  };
 
+  transport.sendMail(message, (error, info) => {
+    if (error) {
+      console.error("OTP email error:", error);
+      return res.status(500).json({
+        message: "Failed to send OTP",
+        error: error.message,
+      });
+    }
+
+    res.json({
+      message: "OTP sent successfully",
+      otp, // ⚠️ REMOVE THIS IN PRODUCTION
+    });
+  });
 }

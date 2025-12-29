@@ -248,11 +248,15 @@ export async function sendOTP(req, res) {
   });
 }
 
-export async function resetPassword(){
+export async function resetPassword(req,res){
+
+  const otp = req.body.otp;
+  const email = req.body.email;
+  const newPassword = req.body.newPassword;
 
 
 
 
 
-  
+
 }

@@ -247,3 +247,12 @@ export async function sendOTP(req, res) {
     });
   });
 }
+
+export async function resetPassword(){
+
+
+
+
+
+  
+}

@@ -154,6 +154,27 @@ export async function loginWithGoogle(req, res) {
     )
 
 
+    }else{
+      const token = jwt.sign({
+        email : user.email,
+        firstName : user.firstName,
+        lastName : user.lastName,
+        role : user.role,
+        img : user.img
+      },
+      process.env.JWT_KEY,
+    )
+
+    res.json({
+      message : "Log in successful",
+      token : token,
+      role: user.role
+
+    })  
+
+
+
+
     }
 
    

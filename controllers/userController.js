@@ -8,6 +8,7 @@ import OTP from "../models/otp.js";
 
 
 
+
 dotenv.config();
 
 export function createUser(req,res){
@@ -255,10 +256,10 @@ export async function resetPassword(req,res){
   const email = req.body.email;
   const newPassword = req.body.newPassword;
 
-  const res = await OTP.findOne({
+  const response = await OTP.findOne({
     email: email
   })
-  if(res== null){
+  if(response == null){
     return res.status(404).json({
       message: "No otp requests found",
     });
@@ -267,12 +268,16 @@ export async function resetPassword(req,res){
   }
 
 
-  if(otp == res.otp){
+  if(otp == response.otp){
     await OTP.deleteMany({
       email: email
     })
 
     const hashedPassword = bcrypt.hashSync(newPassword, 10);
+
+    const res2 = User.updateOne({
+      email,email
+    }, hashedPassword)
 
   }else{
     res.status(403).json({

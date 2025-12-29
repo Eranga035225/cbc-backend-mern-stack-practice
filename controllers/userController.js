@@ -259,10 +259,18 @@ export async function resetPassword(req,res){
   })
   if(res== null){
     return res.status(404).json({
-      message: "User not found",
+      message: "No otp requests found",
     });
 
 
+  }
+
+
+  if(otp == res.otp){
+
+  }else{
+
+    
   }
 
 

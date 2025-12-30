@@ -317,3 +317,30 @@ export function getUser(req,res){
 
 
 }
+
+
+export function checkUsers(req,res){
+  if(req.user==null){
+    res.status(403).json({
+      message : "Please login to check users"
+    })
+    return
+  }
+
+  if(req.user.role != "admin"){
+    res.status(403).json({
+      message : "You are not authorized to check users"
+    })
+    return
+  }
+
+  
+
+
+
+
+
+
+
+
+}

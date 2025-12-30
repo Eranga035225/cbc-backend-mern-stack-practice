@@ -55,6 +55,31 @@ export async  function addReview(req,res){
   }
 
 
+export async function getAllReviews(req,res){
+
+  if(req.user== null){
+    res.status(403).json({
+      message: "please login first"
+    })
+
+  }
+
+  if(!req.user.role.toLowerCase() == "admin"){
+
+    res.status(403).json({
+      message: "You are not authorized to get all the reviews"
+    })
+
+
+
+
+
+  }
+
+
+}
+
+
   
 
 

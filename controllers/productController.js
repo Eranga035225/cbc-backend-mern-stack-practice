@@ -158,17 +158,11 @@ export async function searchProducts(req,res){
   const searchQuery = req.params.query
   try{
     const products = await Product.find({
-      
-
-
-
-
-
+      $or: [
+        {name : {$regex : searchQuery, $options : "i"}},
+        {altNames : { $elemMatch : { $regex : searchQuery, $options : "i"} }}
+      ]
     })
-
-
-
-
   }catch(e){
     res.status(500).json({
       message : "Failed to search the products",

@@ -334,7 +334,19 @@ export function checkUsers(req,res){
     return
   }
 
-  
+
+  User.find().then((users)=>{
+    res.json({
+      users
+    })
+  }).catch((err)=>{
+    res.status(500).json({
+      message : "Failed to get users",
+      error : err
+    })
+  })
+
+
 
 
 

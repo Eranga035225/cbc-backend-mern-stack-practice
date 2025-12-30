@@ -155,6 +155,21 @@ export async function getProductById(req,res){
 }
 
 export async function searchProducts(req,res){
+  const searchQuery = req.params.query
+  try{
+
+
+
+
+  }catch(e){
+    res.status(500).json({
+      message : "Failed to search the products",
+      error : e
+    })
+
+
+
+  }
 
 
 

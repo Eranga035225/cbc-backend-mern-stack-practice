@@ -163,6 +163,9 @@ export async function searchProducts(req,res){
         {altNames : { $elemMatch : { $regex : searchQuery, $options : "i"} }}
       ]
     })
+    res.json(
+      products
+    )
   }catch(e){
     res.status(500).json({
       message : "Failed to search the products",

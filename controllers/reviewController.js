@@ -1,105 +1,63 @@
 import Review from "../models/review.js";
 
-
-export async  function addReview(req,res){
-
-  try{
-
-    
-  if(req.user == null){
-    res.status(403).json({
-      message: "Please login first"
-    })
-  }
-
-  const [productId,rating,comment ] = req.body;
-
-  if(!productId || !rating || !comment){
-    res.status(400).json({
-      message: "Missing required fields"
-    })
-  }
-
-  const review = new Review(
-    {
-
-      productId : req.body.productId,
-      userName : req.user.firstName + " " + req.user.lastName,
-      rating : req.body.rating,
-      comment : req.body.comment
+export async function addReview(req, res) {
+  try {
+    if (!req.user) {
+      return res.status(403).json({
+        message: "Please login first",
+      });
     }
-  )
 
- response =  await review.save();
+    const { productId, rating, comment } = req.body;
 
- if(response){
-  res.json({
-    message: "Review added successfully"
-  })
- }else{
-  res.status(500).json({
-    message: "Failed to add the review"
-  })
- }
+    if (!productId || !rating || !comment) {
+      return res.status(400).json({
+        message: "Missing required fields",
+      });
+    }
 
-  }catch(err){
+    const review = new Review({
+      productId,
+      userName: req.user.firstName + " " + req.user.lastName,
+      rating,
+      comment,
+    });
 
+    await review.save();
+
+    res.json({
+      message: "Review added successfully",
+    });
+
+  } catch (err) {
     res.status(500).json({
       message: "Failed to add the review",
-      error : err
-    })
- }
-
-
-
-  }
-
-
-export async function getAllReviews(req,res){
-  try{
-    
-  if(req.user== null){
-    res.status(403).json({
-      message: "please login first"
-    })
-
-  }
-
-  if(!req.user.role.toLowerCase() == "admin"){
-
-    res.status(403).json({
-      message: "You are not authorized to get all the reviews"
-    })
-
-  response = await Review.find();
-
-  res.json(response)
-  }
-
-
-
-
-
-  }catch(e){
-
-    res.status(500).json({
-      message: "Failed to get all the reviews",
-      error : e
-    })  
+      error: err.message,
+    });
   }
 }
 
+export async function getAllReviews(req, res) {
+  try {
+    if (!req.user) {
+      return res.status(403).json({
+        message: "Please login first",
+      });
+    }
 
+    if (req.user.role.toLowerCase() !== "admin") {
+      return res.status(403).json({
+        message: "You are not authorized to get all reviews",
+      });
+    }
 
+    const reviews = await Review.find().sort({ createdAt: -1 });
+    res.json(reviews);
 
-  
-
-
-
-
-
-
-
-
-
-
+  } catch (err) {
+    res.status(500).json({
+      message: "Failed to get reviews",
+      error: err.message,
+    });
+  }
+}

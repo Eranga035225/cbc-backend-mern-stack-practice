@@ -56,7 +56,8 @@ export async  function addReview(req,res){
 
 
 export async function getAllReviews(req,res){
-
+  try{
+    
   if(req.user== null){
     res.status(403).json({
       message: "please login first"
@@ -70,14 +71,25 @@ export async function getAllReviews(req,res){
       message: "You are not authorized to get all the reviews"
     })
 
+  response = await Review.find();
 
-
-
-
+  res.json(response)
   }
 
 
+
+
+
+  }catch(e){
+
+    res.status(500).json({
+      message: "Failed to get all the reviews",
+      error : e
+    })  
+  }
 }
+
+
 
 
   

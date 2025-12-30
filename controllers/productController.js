@@ -157,6 +157,14 @@ export async function getProductById(req,res){
 export async function searchProducts(req,res){
   const searchQuery = req.params.query
   try{
+    const products = await Product.find({
+      
+
+
+
+
+
+    })
 
 
 

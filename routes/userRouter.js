@@ -15,4 +15,5 @@ userRouter.post("/login", loginUser);
 userRouter.post("/login/google", loginWithGoogle);
 userRouter.post("/send-otp", sendOTP);
 userRouter.post("/reset-password", resetPassword)
+
 export default userRouter;

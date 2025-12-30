@@ -300,3 +300,20 @@ export async function resetPassword(req,res){
 
 
 }
+
+
+export function getUser(req,res){
+  if(req.user==null){
+    res.status(403).json({
+      message : "You are not authorized to get user details"
+    })
+    return
+  }else{
+    res.json({
+      ...req.user
+    })
+  }
+
+
+
+}
